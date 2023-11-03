@@ -1,0 +1,6 @@
+A mi csapatunk neve A.C.S. LOCOMOTIV AGRISTEU és mi vagyunk Bányai Krisztián-Leó, Albert
+Benedek. Az egrestői futbalcsapatnak készítünk weboldalt.  Az oldalunk tartalmazni fog egy híroldalt a
+csapatról, egy játékoslistát és egy webshopot. Lesz felhasználó és admin mód, aki meglátogatja az oldalt
+az be tud regisztrálni, vásárolni, kedvenc listához adni. Admin módba belépve lehet modosítani az
+adatokon. Programozási nyelvként a HTML,CSS és JavaScriptet használjuk. Adatbáziskból vesszük ki az adatokat,
+adatbáziskezelőt még nem választottunk.
