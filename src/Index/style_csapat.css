@@ -7,29 +7,37 @@ body {
     margin: 0;
 }
 
+
 .navbar {
-    background-color: #333;
+    position: fixed; /* A navigációs sáv fix pozícióban legyen */
+    top: 0; /* A felső szélről legyen fixálva */
+    left: 0; /* A bal szélről legyen fixálva */
+    width: 100%; /* Teljes szélességű legyen */
+    background-color: #000; /* Navigációs sáv háttérszíne */
     overflow: hidden;
-    position: fixed; /* Rögzített pozíció a felső sávra */
-    top: 0; /* Az oldal tetejére igazítás */
-    left: 0;
-    width: 100%; /* Teljes szélesség */
+    z-index: 1000; /* Adjunk neki magas z-index értéket a tartalom mögötti megjelenéshez */
 }
 
 .navbar a {
     float: left;
     display: block;
-    color: white;
+    color: rgb(238, 228, 228);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 .navbar a:hover {
-    background-color: #ddd;
+    background-color: #ddd; /* Egér fölötti hátterezés */
     color: black;
 }
 
+.navbar .icon {
+    position: absolute;
+    top: 0px; /* Igazítás a felső sarkához */
+    right: 10px; /* Igazítás a jobb sarkához */
+    max-width: 50px; /* Méret beállítása */
+}
 
 .csapat-tag {
     text-align: center;
@@ -53,4 +61,24 @@ body {
 .csapat-tag p {
     font-size: 14px;
     margin: 5px 0;
+}
+
+.background-image {
+    background-image: url("img/grass.jpg"); /* Háttérkép beállítása */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Ezt hozzáadhatod, ha a háttér fix marad a görgetésnél */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }

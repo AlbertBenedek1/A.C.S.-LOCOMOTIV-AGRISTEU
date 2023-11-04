@@ -1,4 +1,4 @@
-body {
+body { /*szelektorok*/
     margin: 0;
     padding: 0;
     background-image: url('festmeny.png'); /* Háttérkép beállítása */
