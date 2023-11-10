@@ -1,4 +1,4 @@
-alert('hello');
+//alert('hello');
 
 console.log('Hello');
 console.error('Hiba van');
@@ -125,9 +125,119 @@ console.log(allatok3);
 allatok3.push('kacsa');
 console.log(allatok3);
 allatok3.pop();
+console.log(allatok3);
+
+console.log(allatok3.indexOf('lo'));
 
 
+// -- OBJEKTUMOK
+const man = {};
+console.log(man);
+console.log(typeof man);
+
+const ember = {
+    name: 'Zsolt',
+    age: 20,
+    hobbies: ['snowboard','squash'],
+    address: {
+        street: 'Jakab utca',
+        city: 'Budapest'
+    }
+};
+ember.email = 'zsolt@info.hu';
+console.log(ember);
+console.log(ember.name);
+console.log(ember.hobbies.length>0); // tehat van hobbija
+console.log(ember.hobbies[0]);
+
+console.log(JSON.stringify(ember)); //beepitett objektum, levelbe kuldi az egeszet
+
+const{name,age,address:{street}}=ember; //ES6
+console.log(street);
+
+const todo= [ //tombon belul objektum
+{
+    id:1,
+    text: 'Ne felejts el'
+},
+{
+    id: 2,
+    text: 'Linkeld facebookra is'
+}
+];
+console.log(todo);
+console.log(todo[0].id);
 
 
+//  CIKLUSOK
+console.log('for ciklus');
+for(let i=0;i<10;i++)
+{
+    console.log(i);
+}
 
+console.log("while ciklus:");
+let index = 0;
+while (index<10){
+    console.log(index);
+    index++;
+}
+
+const todoIDs = todo.map(function(todo){
+    return todo.id;
+});
+console.log(todoIDs);
+
+
+// --FÜGGVÉNYEK
+
+ function osszeadas(szamx,szamy){
+     console.log(szamx+szamy);
+ }
+
+osszeadas(10,20);
+
+function osszeadas2(szamx2,szamy2){
+    return szamx2+szamy2;
+}
+
+let eredmeny3=osszeadas2(20,30);
+console.log(eredmeny3);
+
+function osszeadas3 (szamm=1,szamm2=2){
+    return szamm+szamm2;
+}
+eredmeny4=osszeadas3("kacsa");
+console.log(eredmeny4);
+
+
+// -- OSZTALYOK
+function ember2(nev,kor,aktiv){
+    this.nev=nev;
+    this.kor=kor;
+    this.aktiv2=aktiv;
+    this.getNev = function (elotag){
+        return `${elotag} ${nev}`;
+    }
+}
+
+const emb1 = new ember2 ("zsolt",20,true);
+console.log(emb1);
+
+console.log(emb1.getNev('Mr, '));
+
+// ember2.prototype.getSzulEv = () => new Date().getFullYear() - this.kor;
+// console.log(emb1);  
+
+class Allat {
+    constructor(nev,kor){
+        this.nev = nev;
+        this.kor = kor;
+    }
+    getSzulEv(){
+        return new Date().getFullYear()-this.kor;
+    }
+}
+const allat1 = new Allat("kutya",5);
+console.log(allat1.getSzulEv());
 
