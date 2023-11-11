@@ -1,0 +1,145 @@
+h1 {
+    color: blue;
+}
+body{
+   /*color: brown; helyett rgb szinkoddal adjuk meg
+   (red,green,blue), hexaba adjuk meg*/
+   /*az rgba ban az a betu az atlatszosagot jelenti*/
+   /* color: rgba(0,0,255,0.2);*/
+   color: #555;
+    background-color: #ececec;
+
+    /*font-family: Arial, Helvetica, sans-serif;*/
+    /*font-family: 'Roboto';
+
+    font-size: 16px;
+    font-weight: normal; /* bold: felkover*/
+
+    font: normal 16px 'Roboto';
+
+    line-height: 1.6em;
+
+    margin: 0;
+
+    /*background-image: url("../image/erdely.jpg");
+    background-repeat: repeat;
+    background-position: center bottom;*/
+
+
+
+} 
+.doboz-1 {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+
+    border-right: 3px #f00 solid;
+
+    border:3px #f00 solid;
+
+    /*padding - szeletol valo tavolsag a dobozon belul*/
+    padding: 20px;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.doboz-1 h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+.container {
+    width: 960px;
+    /*margin: auto;
+
+    margin-top: 200px;
+    margin-bottom:200px;*/
+
+    /* meg lehet adni % -ban is*/
+    /*    fentrol jobbrol alulrol balrol*/
+   /* margin: 200px 20px 10px 30px;*/
+   margin: auto; /*margin- szeletol valo tavolsag*/
+}
+
+a {
+    text-decoration: none;
+    color: teal;
+}
+
+a:hover{
+    color: #f00;
+}
+
+a:active{
+    color: #000;
+}
+
+a:visited{
+    color:#0f0;
+}  
+
+.doboz-2 {
+    border: 3px #0f0 solid;
+    padding: 20px;
+    background-color: #1e1e1e;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.lista {
+    border: 1px gray solid;
+    padding: 10px;
+
+    border-radius: 20px;
+
+}
+
+.lista h1 {
+    text-align: center;   
+}
+
+.lista ul {
+    list-style:lower-greek;
+}
+
+.lista li:first-child{
+    background-color: red;
+}
+
+.lista li:last-child {
+    background-color: green;
+    text-transform: uppercase;
+}
+
+.lista li:nth-child(3){
+    background-color: blue;
+    text-transform: uppercase;
+}
+
+.lista li:nth-child(even){
+    background-color: black;
+    text-transform: uppercase;
+}
+
+.lista li{
+    display: inline;
+}
+
+form input[type="text"],form input[type="password"], form textarea[type="text"]{
+    padding: 10px;
+    width: 100%;
+}
+
+form input[type="submit"]{
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 10px,15px;
+    width: 20%;
+    height: 30px;
+    border: none;
+}
+
+
