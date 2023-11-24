@@ -30,7 +30,7 @@ header {
     margin: auto;
     width: 500px;
     overflow: auto;
-    padding: 50px 30px; /*párnázás felülről és alulról*/
+    padding: 10px 30px; /*párnázás felülről és alulról*/
 }
 
 #user-form {
@@ -78,13 +78,25 @@ header {
 }
 
 .bg-sotet {
-    background: #FFF;
+    background: #333;
     color: #fff;
 }
 
-.error {
+.error { /* a piros hátterű hibaüzenet, amikór nem jól töltöd ki a form mezőket*/
     background: #f00;
     color: #fff;
     padding: 5px;
     margin: 5px;
+}
+
+.vissza-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.vissza {
+    width: 150px; /* Válaszd meg a kívánt méretet */
+    height: 150px; /* Válaszd meg a kívánt méretet */
 }

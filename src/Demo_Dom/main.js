@@ -68,7 +68,7 @@ nameInput.addEventListener('blur', eventRunner);
 
 nameInput.addEventListener('cut', eventRunner);
 nameInput.addEventListener('paste', (ev) => {
-    //ev.preventDefault();
+    //ev.preventDefault(); // megakadályozza, hogy tudjál beilleszteni ebbe a mezőbe
 });
 
 nameInput.addEventListener('input', eventRunner);
