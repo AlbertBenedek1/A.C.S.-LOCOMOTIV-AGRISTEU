@@ -11,17 +11,17 @@ console.log(
         lastName: 'Kovács',
         age: 30,
         phoneNumbers: ['067023456', '067023457'],
-        address: {
-            street: 'Király u.',
-            city: 'Budapest'
-        }
+        address: {  
+            street: 'Király u.',            //
+            city: 'Budapest'                //objektumba obbjektum
+        }                            
     }.address.city
     )
 
-// Feladat 1
+// Feladat : hogyan érem el az objektum tömbb harmadik elemének a country kulcs értékpárját (a provider kulcs alatt lévő country kulcs érétk párja)
     console.log(
         [ 
-            {
+            {                                   //objektum tömb
                 brand: 'Apple',
                 name: 'iPhone X',
                 price: 250000,
@@ -53,5 +53,8 @@ console.log(
     
     console.log(2 != 2);
 
-    var valtozo = 10;
+    console.log(2 == '2'); //igaz (equality)
+    console.log(2 === '2'); //hamis (identify)
+
+    
     

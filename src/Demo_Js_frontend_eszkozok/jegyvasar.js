@@ -15,7 +15,11 @@ var tipusok = {
     nyugdijas: 280
 };
 
-var price = tipusok[tipus];
+// var kulcsszo = 'felnott';
+// console.log(tipusok[kulcs]); //vagy:
+// console.log(tipusok.gyerek);
+
+var price = tipusok[tipus]; //tehát nem index szerint kell keresni, hanem kulcs szerint
 var discount = db > 10 ? 0.9 : 1;
 price = price*db*discount;
 alert(price);

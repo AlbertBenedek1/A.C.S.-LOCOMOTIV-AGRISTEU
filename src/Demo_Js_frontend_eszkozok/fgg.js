@@ -51,10 +51,10 @@ function addTwo(szam) {
 
 
 
-// first class citizen
-// anoním function
-// console.log(addThree(4));
+// first class citizen ) (ugyanúgy lehet venni a függvényt mint bármely más adatstruktúrát, tehát ugyanúgy pl be lehet illeszteni egy objektumba pl mint egy tömböt)
+// anoním function  (nincs neve, használlni csak ott lehet)
 
+// console.log(addThree(4));
 var addThree = function(szam) {
   return szam + 3;
 };
