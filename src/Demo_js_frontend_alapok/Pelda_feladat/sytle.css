@@ -49,6 +49,12 @@
     margin: 10px;
     border-radius: 3px;
   }
+  .circle {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    border-radius: 50%; /* vagy border-radius: 50px; */
+}
   
   .text {
     display: table;
