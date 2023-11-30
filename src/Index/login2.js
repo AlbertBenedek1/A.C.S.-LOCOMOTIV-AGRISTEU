@@ -23,7 +23,7 @@ function onSubmit(ev) {
         clearError();
 
     }
-    else {
+    /*else {
         const li = document.createElement('li');
         li.appendChild(document.createTextNode(`${nameInput.value} (${emailInput.value})`));
 
@@ -31,7 +31,7 @@ function onSubmit(ev) {
 
         nameInput.value = '';
         emailInput.value = '';
-    } 
+    } */
 }
 
 function validateEmail(email) {
@@ -47,5 +47,3 @@ function clearError() {
 }
 
 
-
-  

@@ -17,6 +17,9 @@
       </a>
     </div>
 
+      <div class = "row" id = "lista">
+      </div>
+
     <section class="container">
         <form id="user-form">
           <h1 name='cimsor'>Regisztráció</h1>
@@ -25,27 +28,27 @@
 
           <div>
             <label for="name">Név:</label>
-            <input type="text" id="name">
+            <input type="text" id="name" name="n_name">
           </div>
 
           <div>
             <label for="email">Email:</label>
-            <input type="text" id="email">
+            <input type="text" id="email" name="n_email">
           </div>
 
           <div>
             <label for="password">Jelszó:</label>
-            <input type="password" id="password">
+            <input type="password" id="password" name="n_password">
         </div>
         
         <div>
             <label for="address">Szállítási cím:</label>
-            <input type="text" id="address">
+            <input type="text" id="address" name="n_address">
         </div>
         
         <div>
             <label for="phone">Telefonszám:</label>
-            <input type="text" id="phone">
+            <input type="text" id="phone" name="n_phone">
         </div>
 
         <p>Már regisztráltam <a href="login2.html">bejelentkezés</a></p>
@@ -73,5 +76,7 @@
     
 </body>
 <script src="login.js"></script>
+<script src="./login.crud.js"></script>
+
 
 </html>
