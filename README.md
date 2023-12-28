@@ -1,2 +1,3 @@
 # A.C.S.-LOCOMOTIV-AGRISTEU
-Website
+Miről szól a weboldal.
+Manual: hogyan kell elindítani a projektet.
