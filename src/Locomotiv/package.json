@@ -1,0 +1,17 @@
+{
+  "name": "teszt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"szia\"",
+    "dev": "nodemon index2.js",
+    "dev2": "nodemon index.js",
+    "prod": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
