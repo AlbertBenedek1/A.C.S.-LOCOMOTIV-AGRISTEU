@@ -39,28 +39,22 @@ body {
     max-width: 50px; /* Méret beállítása */
 }
 
-.csapat-tag {
-    text-align: center;
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
-}
-
 .csapat-tag img {
     max-width: 100%;
     border-radius: 50%;
 }
 
 .csapat-tag h2 {
-    font-size: 18px;
+    font-size: 22px;
     margin: 10px 0;
 }
 
 .csapat-tag p {
-    font-size: 14px;
+    font-size: 18px;
     margin: 5px 0;
+    font-weight: bold;
+    color: black;
+
 }
 
 .background-image {
@@ -77,9 +71,24 @@ body {
     z-index: -1;
 }
 
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
+
+/* .csapat-tag elemek formázása */
+.csapat-tag {
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(33% - 40px); /* Három oszlop, 20px margóval mindkét oldalon */
+    box-sizing: border-box;
+    display: inline-block; /* Így maradnak egymás mellett */
 }
+
+/* .row elemek formázása */
+.row {
+    margin-top: 1500px; /* Adjunk egy margin-t az első sorhoz */
+    white-space: normal; /* Visszaállítjuk a normál white-space beállítást */
+}
+
+
 

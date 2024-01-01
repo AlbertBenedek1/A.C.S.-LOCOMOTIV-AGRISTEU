@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futball Csapat</title>
+    <link rel="stylesheet" href="../css/style_csapat.css"> <!-- CSS fájl hivatkozása -->
+</head>
+<body>
+    <div class="navbar">
+        <a href="http://localhost:3000/">Kezdőlap</a>
+        <a href="http://localhost:3000/csapat">Csapat</a>
+        <a href="http://localhost:3000/webshop">Webshop</a>
+        <img src="../img/ikon.png" alt="Ikon" class="icon">
+    </div>
+
+    <div class="background-image"> 
+        <!--<img src="../img/grass.jpg">-->
+    </div> <!-- Háttérkép konténer létrehozása -->
+    
+    <div class="row">
+         <% players.forEach(player => { %>
+            <div class="csapat-tag" >
+                <img src="../img/avatar.jpg" alt="Játékos 1">
+                <h2><%= player.Name %></h2>
+                <p><%= player.Post %></p>
+                <p>Mezszám: <%= player.Jersey %></p>
+                <p>Életkór: <%= player.Year %></p>
+            </div>
+        <% }); %>
+    </div>
+   
+
+</body>
+</html>

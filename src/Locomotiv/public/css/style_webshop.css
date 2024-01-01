@@ -48,10 +48,15 @@ main {
 .product {
     text-align: center;
     margin: 1rem;
-    padding: 1rem;
+    padding: 2rem;
     border: 1px solid #ddd;
     border-radius: 5px;
-    flex: 0 0 calc(30% - 2rem);
+    flex: 0 0 calc(20% - 5rem);
+    background-color: rgb(139, 165, 139); /* Hozzáadott háttérszín */
+    position: relative; /* Relatív pozíció beállítása a szív ikonhoz képest */
+}
+.product:last-child {
+    margin-bottom: 10px;
 }
 
 .product img {
@@ -62,7 +67,7 @@ main {
 
 .price {
     font-weight: bold;
-    color: #f00;
+    color: rgb(79, 19, 19);
 }
 
 footer {
@@ -70,10 +75,10 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #333;
+    background-color: #181818;
     color: white;
     text-align: center;
-    padding: 1rem;
+    padding: 0rem;
 }
 
 
@@ -84,7 +89,82 @@ footer {
     justify-content: flex-end;
 }
 
-.u_icon {
-    width: 70px;
-    height: 70px; 
+    .u_icon {
+        width: 160px;
+        height: 60px; 
+        margin-right: 20px; /* Balra tolás */
+        margin-top: 10px;
+        border-radius: 5px; /* Kerekített sarkok */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Animáció a háttérszínre hover esetén */
+    }
+    
+    .u_icon:hover {
+        background-color: #45a049; /* Háttérszín hover esetén */
+    }
+
+.background-image {
+    background-image: url("../img/webshop_background.jpg"); /* Háttérkép beállítása */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Ezt hozzáadhatod, ha a háttér fix marad a görgetésnél */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+p.elerheto {
+    color: green;
+}
+p.nem_elerheto{
+    color:#f00;
+}
+
+button {
+    background-color: #4CAF50; /* Zöld háttérszín */
+    color: white; /* Fehér szövegszín */
+    padding: 10px 20px; /* Belső térköz beállítása */
+    font-size: 16px; /* Betűméret beállítása */
+    border: none; /* Keret eltávolítása */
+    border-radius: 5px; /* Kerekített sarkok */
+    cursor: pointer; /* Mutató kurzor beállítása */
+}
+
+button:hover {
+    background-color: #45a049; /* Zöld háttérszín egér fölött */
+}
+
+
+
+.heart-icon:hover {
+    color: #e44d26; /* Piros szín hover esetén */
+    background-color: white; /* Fehér háttérszín hover esetén */
+}
+
+.border-heart {
+    position: absolute;
+    top: 15px; /* Igazítás a felső szélhez */
+    right: 15px; /* Igazítás a jobb szélhez */
+    font-size: 24px; /* Betűméret beállítása */
+    
+}
+
+.heart-icon {
+    position: absolute;
+    top: 10px; /* Igazítás a felső szélhez */
+    right: 10px; /* Igazítás a jobb szélhez */
+    font-size: 24px; /* Betűméret beállítása */
+    color: transparent; /* Átlátszó szín */
+    border: 2px solid #e44d26; /* Piros bordúra */
+    border-radius: 50%; /* Kerekített sarkok */
+    padding: 4px; /* Belső térköz a bordúra és a szív között */
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s; /* Animáció a szív színváltozásához */
+    cursor: pointer; /* Mutató kurzor beállítása, hogy jelezze a kattinthatóságot */
+
+    
 }

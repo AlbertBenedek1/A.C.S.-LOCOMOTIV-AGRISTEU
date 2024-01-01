@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webshop</title>
     <link rel="stylesheet" href="../css/style_webshop.css">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Várja meg, amíg az összes DOM elem betöltődik, majd hozzáadja az eseménykezelőt
+            var heartIcons = document.querySelectorAll('.heart-icon');
+
+            heartIcons.forEach(function(heartIcon) {
+                heartIcon.addEventListener('click', function () {
+                    alert('A kedvenc lista adásához be kell jelentkezned! ');
+                });
+                });
+
+                 // Eseménykezelő a vásárlás gombhoz
+            // Eseménykezelő a vásárlás gombhoz
+            var purchaseButtons = document.querySelectorAll('.product button');
+            purchaseButtons.forEach(function(purchaseButton) {
+                purchaseButton.addEventListener('click', function () {
+                    alert('A vásárláshoz be kell jelentkezned!');
+           
+            });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -15,28 +38,41 @@
     </div>
     <div class="user-container">
             <a href="http://localhost:3000/proba">
-                <img src="../img/user.png" alt="Ikon" class="u_icon">
+                <img src="../img/bejelentkezes.png" alt="Ikon" class="u_icon">
             </a>
     </div>
     <main>
-        <section class="product">
+        <div class="background-image"> </div>
+        <!-- <section class="product">
             <img src="../img/sapka.png" alt="Termék 1">
             <h2>Termék 1</h2>
             <p class="description">Ez egy fantasztikus termék.</p>
             <p class="price">$19.99</p>
             <button>Add to Cart</button>
-        </section>
-        <section class="product">
-            <img src="../img/sapka.png" alt="Termék 2">
-            <h2>Termék 2</h2>
-            <p class="description">Még egy fantasztikus termék.</p>
-            <p class="price">$24.99</p>
-            <button>Add to Cart</button>
-        </section>
+        </section> -->
         <!-- További termékek hozzáadása -->
+
+        <% products.forEach(product => { %>
+            <section class="product">
+            <div class="border-heart">&#10084;</div>
+            <div class="heart-icon">&#10084;</div> <!-- &#10084; ez jeleníti meg a H&M-stílusú szív ikont -->
+            <img src="../img/sapka.png">
+            <h2><%= product.Name %></h2>
+            <p class="price"><%= product.Price %></p>
+            <% if (product.isInStock) { %>
+                <p class="elerheto">Elérhető</p>
+                <button>Vásárlás</button>
+            <% } else { %>
+                <p class="nem_elerheto">Nincs készleten</p>
+            <% } %>
+        </section>
+        <% }); %>
+
+       
+
     </main>
     <footer>
-        <p>&copy; 2024 Webshop</p>
+        <p>&copy; LOCOMOTIV Webshop 2024</p>
     </footer>
 </body>
 </html>
