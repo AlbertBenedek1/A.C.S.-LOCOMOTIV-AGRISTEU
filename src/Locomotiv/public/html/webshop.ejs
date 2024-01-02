@@ -37,7 +37,7 @@
         <img src="../img/ikon.png" alt="Ikon" class="icon">
     </div>
     <div class="user-container">
-            <a href="http://localhost:3000/proba">
+            <a href="http://localhost:3000/login2">
                 <img src="../img/bejelentkezes.png" alt="Ikon" class="u_icon">
             </a>
     </div>
@@ -56,7 +56,7 @@
             <section class="product">
             <div class="border-heart">&#10084;</div>
             <div class="heart-icon">&#10084;</div> <!-- &#10084; ez jeleníti meg a H&M-stílusú szív ikont -->
-            <img src="../img/sapka.png">
+            <img src="<%= product.imgPath%>">  <!-- MongoDB-ben csak a kép elérési utját adom meg, tehát minden termékhez hozzárendelek különböző utat ahól különböző képeket érhet el a helyi(szerver) gépemről-->
             <h2><%= product.Name %></h2>
             <p class="price"><%= product.Price %></p>
             <% if (product.isInStock) { %>

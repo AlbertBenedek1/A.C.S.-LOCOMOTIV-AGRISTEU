@@ -83,6 +83,71 @@ app.get('/webshop', function (req, res) {
   run().catch(console.dir);
 });
 
+app.get('/login', function (req, res) {
+  res.render(path.join(__dirname, 'public', 'html', 'login.ejs'));
+  //res.sendFile(path.join(__dirname, 'public', 'html', 'login.ejs'));
+});
+
+app.get('/login2', function (req, res) {
+  res.render(path.join(__dirname, 'public', 'html', 'login2.ejs'));
+  //res.sendFile(path.join(__dirname, 'public', 'html', 'login2.ejs'));
+});
+
+//login/register
+const bodyParser = require('body-parser');
+const users = [];
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.post('/login', function (req, res) {
+  const { n_name, n_email, n_password } = req.body;
+
+  // Ellenőrizzük, hogy a kötelező mezők ki vannak-e töltve
+  if (!n_name || !n_email || !n_password) {
+    return res.status(400).send('Hiányzó adatok'); // Bad Request válasz, ha hiányoznak adatok
+  }
+
+  // Ellenőrizd, hogy az e-mail formátum megfelelő-e (nem a leghatékonyabb, de egyszerű példa)
+  const emailRegex = /\S+@\S+\.\S+/;
+  if (!emailRegex.test(n_email)) {
+    return res.status(400).send('Érvénytelen e-mail cím');
+  }
+
+  // Most hozzáadhatod az új felhasználót a users tömbhöz vagy az adatbázisodhoz
+
+  const newUser = {
+    id: Date.now().toString(),
+    name: n_name,
+    email: n_email,
+    password: n_password,
+  };
+
+  users.push(newUser);
+
+  // Most már kiírhatod a felhasználókat a konzolra
+  console.log(newUser);
+
+  //írás mongoDB -be
+  const client = getClient();
+  async function run() {
+    try {
+      await client.connect();
+      const collection = client.db("Locomotiv").collection("Users");
+      const result = await collection.insertOne(newUser);
+      
+      console.log('Sikeresen hozzáadva:', result.insertedId);
+      res.redirect('/login2');
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+
+
+  // Visszairányítás vagy más válaszok
+  //res.redirect('/login2');
+});
+
 
 //let fs = require("fs");
 //app.set("view engine", "ejs");
