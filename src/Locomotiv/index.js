@@ -107,8 +107,8 @@ app.post('/login', function (req, res) {
     return res.status(400).send('Hiányzó adatok'); // Bad Request válasz, ha hiányoznak adatok
   }
 
-  // Ellenőrizd, hogy az e-mail formátum megfelelő-e (nem a leghatékonyabb, de egyszerű példa)
-  const emailRegex = /\S+@\S+\.\S+/;
+  // Ellenőrizd, hogy az e-mail formátum megfelelő-e
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!emailRegex.test(n_email)) {
     return res.status(400).send('Érvénytelen e-mail cím');
   }
@@ -134,20 +134,56 @@ app.post('/login', function (req, res) {
       await client.connect();
       const collection = client.db("Locomotiv").collection("Users");
       const result = await collection.insertOne(newUser);
-      
       console.log('Sikeresen hozzáadva:', result.insertedId);
-      res.redirect('/login2');
+      res.redirect('/login2'); //válaszként visszairányítom a bejelentkezés oldalra
     } finally {
       await client.close();
     }
   }
   run().catch(console.dir);
-
-
-  // Visszairányítás vagy más válaszok
-  //res.redirect('/login2');
 });
 
+app.post('/login2', function (req, res) {
+  const {n_email, n_password } = req.body;
+
+  // Ellenőrizzük, hogy a kötelező mezők ki vannak-e töltve
+  if (!n_email || !n_password) {
+    return res.status(400).send('Hiányzó adatok'); // Bad Request válasz, ha hiányoznak adatok
+  }
+
+  // Ellenőrizd, hogy az e-mail formátum megfelelő-e (nem a leghatékonyabb, de egyszerű példa)
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (!emailRegex.test(n_email)) {
+    return res.status(400).send('Érvénytelen e-mail cím');
+  }
+
+  // Bejelentkező felhasználó:
+  const signIn = {
+    email: n_email,
+    password: n_password,
+  };
+  console.log(signIn);
+
+  //Most kiolvasom az adatbázisba lévő usereket, összehasonlítom a beérkezett emailt azokkal és ha talál akkor átirányítom a /webshop-ra
+  const client = getClient(); 
+  async function run() {
+    try {
+      await client.connect();                                              
+      const collection = client.db("Locomotiv").collection("Users");      
+      const user = await collection.findOne({ email: n_email });
+
+      if (!user) {
+        return res.status(401).send('Hibás e-mail cím vagy jelszó');
+      }
+      res.redirect('/webshop'); 
+
+      } finally {
+        await client.close();
+      }
+  }
+  run().catch(console.dir);
+
+});
 
 //let fs = require("fs");
 //app.set("view engine", "ejs");

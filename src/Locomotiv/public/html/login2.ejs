@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS kezdőknek</title>    
+    <title>Bejelentkezés</title>    
     <link rel="stylesheet" href="../css/login2.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
     <div class = "row" id = "lista"></div>
 
     <section class="container">
-        <form id="user-form">
+        <form id="user-form" method="POST" action="/login2"> <!-- a formnak a method=POST action="/login2" attributomokat kell beírni ahhoz, hogy az input mezőbe írt adatokat küldeni tudja-->
           <h1 name='cimsor'>Bejelentkezés</h1>
           
           <div class="message"></div>
@@ -56,6 +56,6 @@
     </section>
     <div id="edit-user"></div>   
 </body>
-<script src="../js/login2.js"></script>
-<script src="../js/login2.crud.js"></script>
+<!-- <script src="../js/login2.js"></script>
+<script src="../js/login2.crud.js"></script> -->
 </html>
