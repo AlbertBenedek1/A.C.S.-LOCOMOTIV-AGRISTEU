@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.navbar {
+    position: fixed; /* A navigációs sáv fix pozícióban legyen */
+    top: 0; /* A felső szélről legyen fixálva */
+    left: 0; /* A bal szélről legyen fixálva */
+    width: 100%; /* Teljes szélességű legyen */
+    background-color: #000; /* Navigációs sáv háttérszíne */
+    overflow: hidden;
+    z-index: 1000; /* Adjunk neki magas z-index értéket a tartalom mögötti megjelenéshez */
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: rgb(238, 228, 228);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* Egér fölötti hátterezés */
+    color: black;
+}
+
+.navbar .icon {
+    position: absolute;
+    top: 0px; /* Igazítás a felső sarkához */
+    right: 10px; /* Igazítás a jobb sarkához */
+    max-width: 50px; /* Méret beállítása */
+}
+
+.csapat-tag img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.csapat-tag h2 {
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+.csapat-tag p {
+    font-size: 18px;
+    margin: 5px 0;
+    font-weight: bold;
+    color: black;
+
+}
+
+.background-image {
+    background-image: url("../img/grass2.jpg"); /* Háttérkép beállítása */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Ezt hozzáadhatod, ha a háttér fix marad a görgetésnél */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+
+/* .csapat-tag elemek formázása */
+.csapat-tag {
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(33% - 40px); /* Három oszlop, 20px margóval mindkét oldalon */
+    box-sizing: border-box;
+    display: inline-block; /* Így maradnak egymás mellett */
+}
+
+/* .row elemek formázása */
+.row {
+    margin-top: 1500px; /* Adjunk egy margin-t az első sorhoz */
+    white-space: normal; /* Visszaállítjuk a normál white-space beállítást */
+}
+
+
+
