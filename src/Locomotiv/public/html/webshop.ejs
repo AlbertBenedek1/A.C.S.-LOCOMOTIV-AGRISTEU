@@ -6,28 +6,6 @@
     <title>Webshop</title>
     <link rel="stylesheet" href="../css/style_webshop.css">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Várja meg, amíg az összes DOM elem betöltődik, majd hozzáadja az eseménykezelőt
-            var heartIcons = document.querySelectorAll('.heart-icon');
-
-            heartIcons.forEach(function(heartIcon) {
-                heartIcon.addEventListener('click', function () {
-                    alert('A kedvenc lista adásához be kell jelentkezned! ');
-                });
-                });
-
-                 // Eseménykezelő a vásárlás gombhoz
-            // Eseménykezelő a vásárlás gombhoz
-            var purchaseButtons = document.querySelectorAll('.product button');
-            purchaseButtons.forEach(function(purchaseButton) {
-                purchaseButton.addEventListener('click', function () {
-                    alert('A vásárláshoz be kell jelentkezned!');
-           
-            });
-            });
-        });
-    </script>
 </head>
 <body>
     <div class="navbar">
@@ -35,6 +13,12 @@
         <a href="http://localhost:3000/csapat">Csapat</a>
         <a href="http://localhost:3000/webshop">Webshop</a>
         <img src="../img/ikon.png" alt="Ikon" class="icon">
+        <a href="http://localhost:3000/favourite">
+            <img src="../img/nav_hicon.jpg" alt="Ikon" class="navbar-heart-icon">
+        </a>
+        <a href="http://localhost:3000/kosar">
+            <img src="../img/kosar.png" alt="Ikon" class="shop">
+        </a>
     </div>
     <div class="user-container">
             <a href="http://localhost:3000/login2">
@@ -42,7 +26,16 @@
             </a>
     </div>
     <main>
+
+        <script>
+            // A token-t a localStorage-ba mentjük
+            <% if (token) { %>
+            localStorage.setItem('token', '<%= token %>'); //A szerveroldalról kapom a tokent, itt a localStorage-ban letárollni nem a legbiztonságosabb
+            <% } %>
+                                             // Itt ha sikeresen bejelentkezett felhasználónál fut a kód akkor a token nem üres, különben az
+        </script>                                          
         <div class="background-image"> </div>
+
         <!-- <section class="product">
             <img src="../img/sapka.png" alt="Termék 1">
             <h2>Termék 1</h2>
@@ -50,8 +43,8 @@
             <p class="price">$19.99</p>
             <button>Add to Cart</button>
         </section> -->
-        <!-- További termékek hozzáadása -->
 
+        <!-- További termékek hozzáadása -->
         <% products.forEach(product => { %>
             <section class="product">
             <div class="border-heart">&#10084;</div>
@@ -68,11 +61,92 @@
         </section>
         <% }); %>
 
-       
 
     </main>
+    <% if (token) { %>
+        <button id="logout-button">Kijelentkezés</button>
+    <% } %>
     <footer>
         <p>&copy; LOCOMOTIV Webshop 2024</p>
     </footer>
 </body>
-</html>
+
+<script>   //a heart-icon és a vásárlás button-ra kattintás esetén ezek történnek:
+    document.addEventListener('DOMContentLoaded', function () {
+        // Várja meg, amíg az összes DOM elem betöltődik, majd hozzáadja az eseménykezelőt
+        var heartIcons = document.querySelectorAll('.heart-icon');
+        heartIcons.forEach(function(heartIcon) {
+            heartIcon.addEventListener('click', function () {
+                // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+                var token = localStorage.getItem('token');
+                if (token) {
+                     alert('A kedvenc listához hozzáadva!');
+                    // A kedvenc termék azonosítóját elküldjük a szervernek
+                    //var productId = heartIcon.getAttribute('data-product-id');
+                    //var productId = heartIcon.dataset.productId; // Adj egy adat-attribútumot az ikonhoz a termék azonosítójával
+                    //addToFavorites(productId, token);
+                } else {
+                alert('A kedvenc lista adásához be kell jelentkezned!');
+                }
+            });
+            });
+
+            // function addToFavorites(productId) {
+            //     var token = localStorage.getItem('token');
+            //     var xhr = new XMLHttpRequest();
+            //      xhr.open('POST', 'http://localhost:3000/addToFavorites', true);
+            //      xhr.setRequestHeader('Content-Type', 'application/json');
+            //     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+            //     xhr.onreadystatechange = function () {
+            //     if (xhr.readyState == 4) {
+            //         console.log('XHR status:', xhr.status); // Új sor hozzáadása a hibakód megjelenítéséhez
+            //         if (xhr.status == 200) {
+            //             alert('A kedvenc listához hozzáadva!');
+            //         } else if (xhr.status == 401) {
+            //             localStorage.removeItem('token'); // Töröljük a lejárt tokent a localStorage-ból
+            //             alert('A felhasználó ki van jelentkezve vagy a munkamenet lejárt.');
+            //         } else {
+            //             alert('Hiba történt a kedvenc listához adás során!');
+            //         }
+            //     }
+            // };
+            // var data = JSON.stringify({ productId: productId, token: token });
+            // xhr.send(data);            
+            // }
+     
+
+
+        // Eseménykezelő a vásárlás gombhoz
+        var purchaseButtons = document.querySelectorAll('.product button');
+        purchaseButtons.forEach(function(purchaseButton) {
+            purchaseButton.addEventListener('click', function () {
+                var token = localStorage.getItem('token');
+                if (token) {
+                    //alert('Vásárlás!');
+                    window.location.href = 'http://localhost:3000/shop';
+
+                } else {
+                    alert('A vásárláshoz be kell jelentkezned!');
+                }
+        });
+        });
+
+        // Kijelentkezés eseménykezelő
+        var logoutButton = document.getElementById('logout-button');
+        if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+        var token = localStorage.getItem('token');
+        if (token) {
+        localStorage.removeItem('token'); // Töröljük a tokent a localStorage-ból
+        alert('Sikeres kijelentkezés!');
+        logoutButton.style.display = 'none';         // Ha sikeres a kijelentkezés, akkor elrejtjük a gombot
+        }
+        else {
+            alert('Már ki vagy jelentkezve!');
+        }
+        });
+        }
+});
+</script>
+</html>                

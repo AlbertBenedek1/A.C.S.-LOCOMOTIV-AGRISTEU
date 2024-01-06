@@ -5,6 +5,7 @@ body {
 }
 
 .navbar {
+    position: relative;
     background-color: #000; /* Navigációs sáv háttérszíne */
     overflow: hidden;
 }
@@ -30,6 +31,21 @@ body {
     max-width: 50px; /* Méret beállítása */
 }
 
+.navbar-heart-icon {
+    position: absolute;
+    max-width: 50px; /* Állítsd be a kívánt méretet */
+    right: 90px; /* Igazítás a jobb sarkához, ha szükséges */
+    top: 0px;
+    max-height: 70px;
+}
+
+.shop {
+    position: absolute;
+    max-width: 50px; /* Állítsd be a kívánt méretet */
+    right: 160px; /* Igazítás a jobb sarkához, ha szükséges */
+    top: 10px;
+    max-height: 70px;
+}
 
 header {
     background-color: #333;
@@ -81,12 +97,21 @@ footer {
     padding: 0rem;
 }
 
-
 .user-container {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+#logout-button {
+    position: absolute;
+    top: 61px; /* Igazítás a felső szélhez */
+    right: 180px; /* Igazítás a jobb szélhez */
+    height: 55px;
+}
+
+.login-icon-container {
+    margin-right: 10px; /* Válassz egy megfelelő margót a bejelentkezés ikon és az üdvözlő szöveg között */
 }
 
     .u_icon {
@@ -138,8 +163,6 @@ button:hover {
     background-color: #45a049; /* Zöld háttérszín egér fölött */
 }
 
-
-
 .heart-icon:hover {
     color: #e44d26; /* Piros szín hover esetén */
     background-color: white; /* Fehér háttérszín hover esetén */
@@ -166,5 +189,4 @@ button:hover {
     transition: color 0.3s, background-color 0.3s; /* Animáció a szív színváltozásához */
     cursor: pointer; /* Mutató kurzor beállítása, hogy jelezze a kattinthatóságot */
 
-    
 }

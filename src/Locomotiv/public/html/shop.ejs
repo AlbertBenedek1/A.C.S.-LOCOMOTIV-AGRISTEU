@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedvencek</title>
+    <link rel="stylesheet" href="../css/style_webshop.css">
+    <link rel="stylesheet" href="../css/login.css">
+
+</head>
+<body>
+    <div class="background-image"> </div>
+    <div class="vissza-container">
+        <a href="http://localhost:3000/webshop">
+            <img src="../img/vissza.jpg" alt="Ikon" class="vissza">
+        </a>
+      </div>
+
+      <style>
+        #purchaseForm {
+            text-align: center;
+            margin-top: 50px;
+            max-width: 500px; /* Állítsd be a maximális szélességet a megfelelő méret érdekében */
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 26px; /* Hozzáadott: Font méret */
+            font-weight: bold;
+            
+        }
+
+        #purchaseForm label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #purchaseForm input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #purchaseForm button {
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: calc(100% - 20px); /* A küldés gomb 10px padding mindkét oldalán */
+
+        }
+
+        #thankYouMessage {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Űrlap kezdet -->
+    <form id="purchaseForm" onsubmit="return submitForm();">
+        <label for="name">Név:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="county">Megye:</label>
+        <input type="text" id="county" name="county" required><br>
+
+        <label for="city">Település:</label>
+        <input type="text" id="city" name="city" required><br>
+
+        <label for="street">Utca:</label>
+        <input type="text" id="street" name="street" required><br>
+
+        <label for="houseNumber">Házszám:</label>
+        <input type="text" id="houseNumber" name="houseNumber" required><br>
+
+        <label for="paymentOnDelivery">Átvételkor fizetek:</label>
+        <input type="checkbox" id="paymentOnDelivery" name="paymentOnDelivery" required><br>
+
+        <button type="button" onclick="submitForm()">Küldés</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            var name = document.getElementById('name').value;
+            var county = document.getElementById('county').value;
+            var city = document.getElementById('city').value;
+            var street = document.getElementById('street').value;
+            var houseNumber = document.getElementById('houseNumber').value;
+            var paymentOnDelivery = document.getElementById('paymentOnDelivery').checked;
+
+            if (!name || !county || !city || !street || !houseNumber || !paymentOnDelivery) {
+                alert('Hiányzó adatok');
+                return false; // A form nem kerül elküldésre, mert hiányzó adatok vannak
+            } else {
+                document.getElementById('purchaseForm').style.display = 'none';
+                document.getElementById('thankYouMessage').style.display = 'block';
+                alert("köszönjük a vásárlást!")
+                return true; // A form elküldése engedélyezve van
+            }
+        }
+    </script>
+
+    <div id="thankYouMessage" style="display: none;">
+        <p>Köszönjük a vásárlást!</p>
+    </div>
+
+    
+
+    
+</body>
+</html>

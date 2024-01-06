@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+//cookie-k:
+const jwt = require('jsonwebtoken');
+const { log } = require('console');
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname)));
 
 app.get('/', function (req, res) {
@@ -12,7 +18,7 @@ app.get('/', function (req, res) {
 const ObjectId = require("mongodb").ObjectId;
 
 function getClient(){
-  const { MongoClient, ServerApiVersion } = require('mongodb'); // mongoDB könyvtár lehívása 
+  const { MongoClient, ServerApiVersion, LEGAL_TLS_SOCKET_OPTIONS } = require('mongodb'); // mongoDB könyvtár lehívása 
   const uri = "mongodb+srv://benedek:Ulp6V0eRb8wTiL5N@cluster0.zwdawud.mongodb.net/?retryWrites=true&w=majority"; //be van égetve ide a jelszó (nagy biztonsági kockázat)
   const client = new MongoClient(uri, {
     serverApi: {
@@ -74,8 +80,13 @@ app.get('/webshop', function (req, res) {
     try {
       await client.connect();                                              
       const collection = client.db("Locomotiv").collection("Shop");      
-      const products = await collection.find().toArray();                    
-      res.render(filePath, {products});                                      
+      const products = await collection.find().toArray();
+      
+      // Itt adjuk hozzá a token-t a válasz headerjéhez. Itt Be nem jelentkezett felhasználó esetén a req.cookies.token értéke üres lesz, mert a felhasználó nincs bejelentkezve vagy a token nincs a cookie-ban és a válasz fejlécéhez nem kerül hozzáadásra token (csak fut tobább a kód)
+      const token = req.cookies.token; // Itt feltételezzük, hogy a token a cookie-ban van
+      res.setHeader('Authorization', `Bearer ${token}`); //Bearer tipusu token használata
+      // Átadjuk az utat az ejs fájlhoz, átadjuk a token-t és a termékeket
+      res.render(filePath, { products, token});  //ha nem bejelentkezett felhasználónál futott le eddig akkor a token egyszerüen üres marad   
     } finally {
       await client.close();
     }
@@ -143,6 +154,8 @@ app.post('/login', function (req, res) {
   run().catch(console.dir);
 });
 
+
+//BEJELENTKEZÉS:
 app.post('/login2', function (req, res) {
   const {n_email, n_password } = req.body;
 
@@ -164,26 +177,114 @@ app.post('/login2', function (req, res) {
   };
   console.log(signIn);
 
-  //Most kiolvasom az adatbázisba lévő usereket, összehasonlítom a beérkezett emailt azokkal és ha talál akkor átirányítom a /webshop-ra
+  //A beírt adatokat megpróbálom összehasonlítani a findOne függvénnyel az adatbázisban lévő adatokkal. Ha talál akkor átirányítom a /webshop-ra különben hibaüzenet
   const client = getClient(); 
   async function run() {
     try {
       await client.connect();                                              
       const collection = client.db("Locomotiv").collection("Users");      
-      const user = await collection.findOne({ email: n_email });
+      const user = await collection.findOne({ email: n_email }); //itt a kezünkbe lessz a user (user.id, user.name, user.email, user.password)
 
       if (!user) {
         return res.status(401).send('Hibás e-mail cím vagy jelszó');
       }
-      res.redirect('/webshop'); 
 
+     if(n_password !== user.password){
+      return res.status(401).send('Hibás e-mail cím vagy jelszó');
+     }
+
+       // Ha eljuttunk idáig akkor a felhasználó azonosítása sikeres, itt generáljuk a tokent
+      const token = jwt.sign({ userId: user.id, email: user.email }, 'titkosKulcs', { expiresIn: '1h' });
+       //console.log(token); //(egy nagyon hosszu kod)
+        // A token-t visszaküldjük a kliensnek
+      res.cookie('token', token); // a token-t a cookie-ba helyezzük, de lehet más módszert is használni
+
+      if (user.role === 'admin'){
+        res.redirect('/admin')
+      } else {
+        res.redirect('/webshop');  //visszairányítom a weboldalra
+      }
       } finally {
         await client.close();
       }
   }
   run().catch(console.dir);
-
 });
+
+app.get('/favourite', function (req, res) {
+  res.render(path.join(__dirname, 'public', 'html', 'favourite.ejs'));
+});
+
+app.get('/shop', function (req, res) {
+  res.render(path.join(__dirname, 'public', 'html', 'shop.ejs'));
+});
+
+app.get('/kosar', function (req, res) {
+  res.render(path.join(__dirname, 'public', 'html', 'kosar.ejs'));
+});
+
+app.get('/admin', function (req, res) {
+  const filePath = path.join(__dirname, "public", "html", "admin.ejs"); //tartalmazza az utat a speciális html fájlhoz
+  const client = getClient(); //tartalmazza a kapcsolatomat a MongoDB-vel
+  async function run() {
+    try {
+      await client.connect();                                               //csatlakozok a MongoDB-hez
+      const collection = client.db("Locomotiv").collection("Users");        //tartalmazza a collectionomet a MongoDB-ben
+      const usrs = await collection.find().toArray();                    //kihalássza a tartalmat a collectionbol
+      res.render(filePath, {usrs});                                      //megküldi az utat és a MongoDB-ben lévő collection tartalmat
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+});
+
+/*
+app.post('/addToFavorites', function (req, res) {
+  const { productId, token } = req.body;
+
+  console.log('Received productId:', productId);
+  console.log('Received token:', token);
+
+  // Ellenőrizd, hogy a kötelező mezők ki vannak-e töltve
+  if (!productId || !token) {
+      return res.status(400).json({ error: 'Hiányzó adatok' }); // Bad Request válasz, ha hiányoznak adatok
+  }
+
+  // Ellenőrizd a tokent
+  jwt.verify(token, 'titkosKulcs', function (err, decoded) {
+      if (err) {
+        console.error('Token verification error:', err);
+          if (err.name === 'TokenExpiredError') {
+              return res.status(401).json({ error: 'A token lejárt, kérjük, jelentkezzen be újra.' });
+          } else {
+              return res.status(401).json({ error: 'Érvénytelen token, kérjük, jelentkezzen be újra.' });
+          }
+      }
+
+      // Ha a token ellenőrzése sikeres, a felhasználó azonosítása megtörtént
+      // Most hozzáadhatod az adatbázishoz a kedvenc terméket a kedvenc kollekcióban
+      const userId = decoded.userId; // Az azonosító, amely alapján azonosítani tudod a felhasználót
+
+      const client = getClient();
+      async function run() {
+          try {
+              await client.connect();
+              const collection = client.db("Locomotiv").collection("Favourite");
+              const result = await collection.updateOne(
+                  { userId: userId },
+                  { $addToSet: { products: productId } },
+                  { upsert: true }
+              );
+              console.log('Sikeresen hozzáadva a kedvenc listához:', result.upsertedId);
+              res.status(200).json({ message: 'Sikeresen hozzáadva a kedvenc listához' });
+          } finally {
+              await client.close();
+          }
+      }
+      run().catch(console.dir);
+  });
+});*/
 
 //let fs = require("fs");
 //app.set("view engine", "ejs");
