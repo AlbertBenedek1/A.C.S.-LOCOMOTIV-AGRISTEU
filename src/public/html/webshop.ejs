@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webshop</title>
+    <link rel="stylesheet" href="../css/style_webshop.css">
+
+</head>
+<body>
+    <div class="navbar">
+        <a href="http://localhost:3000/">Kezdőlap</a>
+        <a href="http://localhost:3000/csapat">Csapat</a>
+        <a href="http://localhost:3000/webshop">Webshop</a>
+        <img src="../img/ikon.png" alt="Ikon" class="icon">
+        <a href="http://localhost:3000/favourite">
+            <img src="../img/nav_hicon.jpg" alt="Ikon" class="navbar-heart-icon">
+        </a>
+        <a href="http://localhost:3000/kosar">
+            <img src="../img/kosar.png" alt="Ikon" class="shop">
+        </a>
+    </div>
+    <div class="user-container">
+            <a href="http://localhost:3000/login2">
+                <img src="../img/bejelentkezes.png" alt="Ikon" class="u_icon">
+            </a>
+    </div>
+    <main>
+
+        <script>
+            // A token-t a localStorage-ba mentjük
+            <% if (token) { %>
+            localStorage.setItem('token', '<%= token %>'); //A szerveroldalról kapom a tokent, itt a localStorage-ban letárollni nem a legbiztonságosabb
+            <% } %>
+                                             // Itt ha sikeresen bejelentkezett felhasználónál fut a kód akkor a token nem üres, különben az
+        </script>                                          
+        <div class="background-image"> </div>
+
+        <!-- <section class="product">
+            <img src="../img/sapka.png" alt="Termék 1">
+            <h2>Termék 1</h2>
+            <p class="description">Ez egy fantasztikus termék.</p>
+            <p class="price">$19.99</p>
+            <button>Add to Cart</button>
+        </section> -->
+
+        <!-- További termékek hozzáadása -->
+        <% products.forEach(product => { %>
+            <section class="product">
+            <div class="border-heart">&#10084;</div>
+            <div class="heart-icon">&#10084;</div> <!-- &#10084; ez jeleníti meg a H&M-stílusú szív ikont -->
+            <img src="<%= product.imgPath%>">  <!-- MongoDB-ben csak a kép elérési utját adom meg, tehát minden termékhez hozzárendelek különböző utat ahól különböző képeket érhet el a helyi(szerver) gépemről-->
+            <h2><%= product.Name %></h2>
+            <p class="price"><%= product.Price %></p>
+            <% if (product.isInStock) { %>
+                <p class="elerheto">Elérhető</p>
+                <button>Vásárlás</button>
+            <% } else { %>
+                <p class="nem_elerheto">Nincs készleten</p>
+            <% } %>
+        </section>
+        <% }); %>
+
+
+    </main>
+    <% if (token) { %>
+        <button id="logout-button">Kijelentkezés</button>
+    <% } %>
+    <footer>
+        <p>&copy; LOCOMOTIV Webshop 2024</p>
+    </footer>
+</body>
+
+<script>   //a heart-icon és a vásárlás button-ra kattintás esetén ezek történnek:
+    document.addEventListener('DOMContentLoaded', function () {
+        // Várja meg, amíg az összes DOM elem betöltődik, majd hozzáadja az eseménykezelőt
+        var heartIcons = document.querySelectorAll('.heart-icon');
+        heartIcons.forEach(function(heartIcon) {
+            heartIcon.addEventListener('click', function () {
+                // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
+                var token = localStorage.getItem('token');
+                if (token) {
+                    var productName = this.parentNode.querySelector('h2').textContent;
+
+                    // Küldj vissza egy AJAX kérést a szerverre a termék nevével
+                    fetch('/addToFavorites', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ productName: productName })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                        // Itt további kezeléseket végezhetsz az AJAX válasznak
+                    })
+                    .catch(error => console.error('AJAX error:', error));
+                                    } else {
+                alert('A kedvenc lista adásához be kell jelentkezned!');
+                }
+            });
+            });
+
+            // function addToFavorites(productId) {
+            //     var token = localStorage.getItem('token');
+            //     var xhr = new XMLHttpRequest();
+            //      xhr.open('POST', 'http://localhost:3000/addToFavorites', true);
+            //      xhr.setRequestHeader('Content-Type', 'application/json');
+            //     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+            //     xhr.onreadystatechange = function () {
+            //     if (xhr.readyState == 4) {
+            //         console.log('XHR status:', xhr.status); // Új sor hozzáadása a hibakód megjelenítéséhez
+            //         if (xhr.status == 200) {
+            //             alert('A kedvenc listához hozzáadva!');
+            //         } else if (xhr.status == 401) {
+            //             localStorage.removeItem('token'); // Töröljük a lejárt tokent a localStorage-ból
+            //             alert('A felhasználó ki van jelentkezve vagy a munkamenet lejárt.');
+            //         } else {
+            //             alert('Hiba történt a kedvenc listához adás során!');
+            //         }
+            //     }
+            // };
+            // var data = JSON.stringify({ productId: productId, token: token });
+            // xhr.send(data);            
+            // }
+     
+
+
+        // Eseménykezelő a vásárlás gombhoz
+        var purchaseButtons = document.querySelectorAll('.product button');
+        purchaseButtons.forEach(function(purchaseButton) {
+            purchaseButton.addEventListener('click', function () {
+                var token = localStorage.getItem('token');
+                if (token) {
+                    //alert('Vásárlás!');
+                    window.location.href = 'http://localhost:3000/shop';
+
+                } else {
+                    alert('A vásárláshoz be kell jelentkezned!');
+                }
+        });
+        });
+
+        // Kijelentkezés eseménykezelő
+var logoutButton = document.getElementById('logout-button');
+if (logoutButton) {
+  logoutButton.addEventListener('click', function () {
+    var token = localStorage.getItem('token');
+    if (token) {
+      localStorage.removeItem('token'); // Töröljük a tokent a localStorage-ból
+
+      // További módosítás: töröld a tokent a szerver oldalról is
+      fetch('/logout', {
+        method: 'GET',
+        credentials: 'include' // Kérjük a böngészőt, hogy küldje el a sütiket a szerverhez
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error('Logout error:', error));
+
+      alert('Sikeres kijelentkezés!');
+      logoutButton.style.display = 'none'; // Ha sikeres a kijelentkezés, akkor elrejtjük a gombot
+    } else {
+      alert('Már ki vagy jelentkezve!');
+    }
+  });
+}
+});
+</script>
+</html>                

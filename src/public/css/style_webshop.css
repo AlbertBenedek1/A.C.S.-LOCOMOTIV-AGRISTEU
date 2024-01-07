@@ -1,0 +1,192 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    position: relative;
+    background-color: #000; /* Navigációs sáv háttérszíne */
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: rgb(238, 228, 228);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* Egér fölötti hátterezés */
+    color: black;
+}
+
+.navbar .icon {
+    position: absolute;
+    top: 0px; /* Igazítás a felső sarkához */
+    right: 10px; /* Igazítás a jobb sarkához */
+    max-width: 50px; /* Méret beállítása */
+}
+
+.navbar-heart-icon {
+    position: absolute;
+    max-width: 50px; /* Állítsd be a kívánt méretet */
+    right: 90px; /* Igazítás a jobb sarkához, ha szükséges */
+    top: 0px;
+    max-height: 70px;
+}
+
+.shop {
+    position: absolute;
+    max-width: 50px; /* Állítsd be a kívánt méretet */
+    right: 160px; /* Igazítás a jobb sarkához, ha szükséges */
+    top: 10px;
+    max-height: 70px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.product {
+    text-align: center;
+    margin: 1rem;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 0 0 calc(20% - 5rem);
+    background-color: rgb(139, 165, 139); /* Hozzáadott háttérszín */
+    position: relative; /* Relatív pozíció beállítása a szív ikonhoz képest */
+}
+.product:last-child {
+    margin-bottom: 10px;
+}
+
+.product img {
+    max-width: 90%;
+    height: auto;
+}
+
+
+.price {
+    font-weight: bold;
+    color: rgb(79, 19, 19);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #181818;
+    color: white;
+    text-align: center;
+    padding: 0rem;
+}
+
+.user-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+#logout-button {
+    position: absolute;
+    top: 61px; /* Igazítás a felső szélhez */
+    right: 180px; /* Igazítás a jobb szélhez */
+    height: 55px;
+}
+
+.login-icon-container {
+    margin-right: 10px; /* Válassz egy megfelelő margót a bejelentkezés ikon és az üdvözlő szöveg között */
+}
+
+    .u_icon {
+        width: 160px;
+        height: 60px; 
+        margin-right: 20px; /* Balra tolás */
+        margin-top: 10px;
+        border-radius: 5px; /* Kerekített sarkok */
+        cursor: pointer;
+        transition: background-color 0.3s; /* Animáció a háttérszínre hover esetén */
+    }
+    
+    .u_icon:hover {
+        background-color: #45a049; /* Háttérszín hover esetén */
+    }
+
+.background-image {
+    background-image: url("../img/webshop_background.jpg"); /* Háttérkép beállítása */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Ezt hozzáadhatod, ha a háttér fix marad a görgetésnél */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+p.elerheto {
+    color: green;
+}
+p.nem_elerheto{
+    color:#f00;
+}
+
+button {
+    background-color: #4CAF50; /* Zöld háttérszín */
+    color: white; /* Fehér szövegszín */
+    padding: 10px 20px; /* Belső térköz beállítása */
+    font-size: 16px; /* Betűméret beállítása */
+    border: none; /* Keret eltávolítása */
+    border-radius: 5px; /* Kerekített sarkok */
+    cursor: pointer; /* Mutató kurzor beállítása */
+}
+
+button:hover {
+    background-color: #45a049; /* Zöld háttérszín egér fölött */
+}
+
+.heart-icon:hover {
+    color: #e44d26; /* Piros szín hover esetén */
+    background-color: white; /* Fehér háttérszín hover esetén */
+}
+
+.border-heart {
+    position: absolute;
+    top: 15px; /* Igazítás a felső szélhez */
+    right: 15px; /* Igazítás a jobb szélhez */
+    font-size: 24px; /* Betűméret beállítása */
+    
+}
+
+.heart-icon {
+    position: absolute;
+    top: 10px; /* Igazítás a felső szélhez */
+    right: 10px; /* Igazítás a jobb szélhez */
+    font-size: 24px; /* Betűméret beállítása */
+    color: transparent; /* Átlátszó szín */
+    border: 2px solid #e44d26; /* Piros bordúra */
+    border-radius: 50%; /* Kerekített sarkok */
+    padding: 4px; /* Belső térköz a bordúra és a szív között */
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s; /* Animáció a szív színváltozásához */
+    cursor: pointer; /* Mutató kurzor beállítása, hogy jelezze a kattinthatóságot */
+
+}
