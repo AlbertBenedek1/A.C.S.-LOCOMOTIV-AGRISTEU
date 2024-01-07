@@ -84,7 +84,10 @@ app.get('/webshop', function (req, res) {
       
       // Itt adjuk hozzá a token-t a válasz headerjéhez. Itt Be nem jelentkezett felhasználó esetén a req.cookies.token értéke üres lesz, mert a felhasználó nincs bejelentkezve vagy a token nincs a cookie-ban és a válasz fejlécéhez nem kerül hozzáadásra token (csak fut tobább a kód)
       const token = req.cookies.token; // Itt feltételezzük, hogy a token a cookie-ban van
-      res.setHeader('Authorization', `Bearer ${token}`); //Bearer tipusu token használata
+      console.log(token);
+      if (token){      
+        res.setHeader('Authorization', `Bearer ${token}`); //Bearer tipusu token használata
+      }
       // Átadjuk az utat az ejs fájlhoz, átadjuk a token-t és a termékeket
       res.render(filePath, { products, token});  //ha nem bejelentkezett felhasználónál futott le eddig akkor a token egyszerüen üres marad   
     } finally {
@@ -194,7 +197,7 @@ app.post('/login2', function (req, res) {
      }
 
        // Ha eljuttunk idáig akkor a felhasználó azonosítása sikeres, itt generáljuk a tokent
-      const token = jwt.sign({ userId: user.id, email: user.email }, 'titkosKulcs', { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id, email: user.email }, 'titkosKulcs');
        //console.log(token); //(egy nagyon hosszu kod)
         // A token-t visszaküldjük a kliensnek
       res.cookie('token', token); // a token-t a cookie-ba helyezzük, de lehet más módszert is használni
@@ -210,6 +213,13 @@ app.post('/login2', function (req, res) {
   }
   run().catch(console.dir);
 });
+
+// Kijelentkezés eseménykezelő
+app.get('/logout', function (req, res) {
+  res.clearCookie('token'); // Törljük a tokent a sütiből
+  res.redirect('/webshop'); // Visszairányítjuk a felhasználót a webshop oldalra
+});
+
 
 app.get('/favourite', function (req, res) {
   res.render(path.join(__dirname, 'public', 'html', 'favourite.ejs'));
@@ -237,6 +247,14 @@ app.get('/admin', function (req, res) {
     }
   }
   run().catch(console.dir);
+});
+
+app.post('/addToFavorites', function (req, res) {
+  const { productName } = req.body;
+
+  console.log(productName);
+
+  res.status(200).json({ message: 'A kedvenc listához hozzáadva!' });
 });
 
 /*

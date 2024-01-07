@@ -80,12 +80,24 @@
                 // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
                 var token = localStorage.getItem('token');
                 if (token) {
-                     alert('A kedvenc listához hozzáadva!');
-                    // A kedvenc termék azonosítóját elküldjük a szervernek
-                    //var productId = heartIcon.getAttribute('data-product-id');
-                    //var productId = heartIcon.dataset.productId; // Adj egy adat-attribútumot az ikonhoz a termék azonosítójával
-                    //addToFavorites(productId, token);
-                } else {
+                    var productName = this.parentNode.querySelector('h2').textContent;
+
+                    // Küldj vissza egy AJAX kérést a szerverre a termék nevével
+                    fetch('/addToFavorites', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ productName: productName })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                        // Itt további kezeléseket végezhetsz az AJAX válasznak
+                    })
+                    .catch(error => console.error('AJAX error:', error));
+                                    } else {
                 alert('A kedvenc lista adásához be kell jelentkezned!');
                 }
             });
@@ -133,20 +145,31 @@
         });
 
         // Kijelentkezés eseménykezelő
-        var logoutButton = document.getElementById('logout-button');
-        if (logoutButton) {
-        logoutButton.addEventListener('click', function () {
-        var token = localStorage.getItem('token');
-        if (token) {
-        localStorage.removeItem('token'); // Töröljük a tokent a localStorage-ból
-        alert('Sikeres kijelentkezés!');
-        logoutButton.style.display = 'none';         // Ha sikeres a kijelentkezés, akkor elrejtjük a gombot
-        }
-        else {
-            alert('Már ki vagy jelentkezve!');
-        }
-        });
-        }
+var logoutButton = document.getElementById('logout-button');
+if (logoutButton) {
+  logoutButton.addEventListener('click', function () {
+    var token = localStorage.getItem('token');
+    if (token) {
+      localStorage.removeItem('token'); // Töröljük a tokent a localStorage-ból
+
+      // További módosítás: töröld a tokent a szerver oldalról is
+      fetch('/logout', {
+        method: 'GET',
+        credentials: 'include' // Kérjük a böngészőt, hogy küldje el a sütiket a szerverhez
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error('Logout error:', error));
+
+      alert('Sikeres kijelentkezés!');
+      logoutButton.style.display = 'none'; // Ha sikeres a kijelentkezés, akkor elrejtjük a gombot
+    } else {
+      alert('Már ki vagy jelentkezve!');
+    }
+  });
+}
 });
 </script>
 </html>                
